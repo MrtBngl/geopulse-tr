@@ -1,0 +1,279 @@
+@import "maplibre-gl/dist/maplibre-gl.css";
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Segoe UI", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-abyss-950: #04060c;
+  --color-abyss-900: #070b14;
+  --color-abyss-850: #0a101c;
+  --color-abyss-800: #0e1524;
+  --color-abyss-700: #16203354;
+
+  --color-pulse-low: #facc15;
+  --color-pulse-mid: #fb923c;
+  --color-pulse-high: #ef4444;
+  --color-pulse-extreme: #f43f5e;
+  --color-signal: #22d3ee;
+}
+
+@layer base {
+  * {
+    border-color: rgb(148 163 184 / 0.12);
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    background-color: #04060c;
+    color: #e2e8f0;
+    font-family: var(--font-sans);
+    overflow: hidden;
+    background-image:
+      radial-gradient(900px 520px at 12% -10%, rgba(34, 211, 238, 0.1), transparent 60%),
+      radial-gradient(800px 480px at 96% 0%, rgba(239, 68, 68, 0.09), transparent 62%),
+      radial-gradient(700px 700px at 50% 120%, rgba(59, 130, 246, 0.08), transparent 60%);
+  }
+
+  ::selection {
+    background: rgba(34, 211, 238, 0.28);
+    color: #ecfeff;
+  }
+}
+
+/* ---------------------------------- */
+/* Scrollbar                          */
+/* ---------------------------------- */
+.thin-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.28) transparent;
+}
+.thin-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.thin-scroll::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.25);
+  border-radius: 999px;
+}
+.thin-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 211, 238, 0.45);
+}
+.thin-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---------------------------------- */
+/* Glass surfaces                     */
+/* ---------------------------------- */
+.glass {
+  background: linear-gradient(160deg, rgba(14, 21, 36, 0.88), rgba(6, 10, 18, 0.82));
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.glass-soft {
+  background: rgba(11, 17, 29, 0.6);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.grid-backdrop {
+  background-image:
+    linear-gradient(rgba(34, 211, 238, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ---------------------------------- */
+/* Radar / pulse marker animations    */
+/* ---------------------------------- */
+@keyframes geo-radar {
+  0% {
+    transform: scale(0.35);
+    opacity: 0.85;
+  }
+  70% {
+    opacity: 0.12;
+  }
+  100% {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}
+
+@keyframes geo-core {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.14);
+    filter: brightness(1.35);
+  }
+}
+
+@keyframes geo-sweep {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes geo-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes geo-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@keyframes geo-ticker {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  8% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.radar-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1.5px solid currentColor;
+  animation: geo-radar 3.1s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+.radar-core {
+  animation: geo-core 2.4s ease-in-out infinite;
+}
+
+.blink {
+  animation: geo-blink 1.6s ease-in-out infinite;
+}
+
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(148, 163, 184, 0.14),
+    transparent
+  );
+  animation: geo-shimmer 1.6s infinite;
+}
+
+.sweep::before {
+  content: "";
+  position: absolute;
+  inset: -35%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(34, 211, 238, 0) 0deg,
+    rgba(34, 211, 238, 0.16) 40deg,
+    rgba(34, 211, 238, 0) 90deg
+  );
+  animation: geo-sweep 6s linear infinite;
+  pointer-events: none;
+}
+
+/* ---------------------------------- */
+/* MapLibre overrides (dark theme)    */
+/* ---------------------------------- */
+.maplibregl-map {
+  font-family: var(--font-sans);
+  background: #04060c;
+}
+
+.maplibregl-ctrl-group {
+  background: rgba(10, 16, 28, 0.85) !important;
+  border: 1px solid rgba(148, 163, 184, 0.14) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45) !important;
+  backdrop-filter: blur(10px);
+}
+
+.maplibregl-ctrl-group button {
+  background: transparent !important;
+  width: 34px !important;
+  height: 34px !important;
+}
+
+.maplibregl-ctrl-group button + button {
+  border-top: 1px solid rgba(148, 163, 184, 0.12) !important;
+}
+
+.maplibregl-ctrl-group button:hover {
+  background: rgba(34, 211, 238, 0.12) !important;
+}
+
+.maplibregl-ctrl-icon {
+  filter: invert(1) hue-rotate(180deg) brightness(1.4);
+  opacity: 0.75;
+}
+
+.maplibregl-ctrl-attrib {
+  background: rgba(4, 6, 12, 0.65) !important;
+  color: rgba(148, 163, 184, 0.7) !important;
+  font-size: 10px !important;
+  border-radius: 8px 0 0 0 !important;
+}
+.maplibregl-ctrl-attrib a {
+  color: rgba(148, 163, 184, 0.85) !important;
+}
+
+.maplibregl-ctrl-scale {
+  background: rgba(4, 6, 12, 0.55) !important;
+  border-color: rgba(148, 163, 184, 0.28) !important;
+  color: rgba(203, 213, 225, 0.8) !important;
+  font-size: 10px !important;
+  border-radius: 4px;
+}
+
+.maplibregl-marker {
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .radar-ring,
+  .radar-core,
+  .sweep::before,
+  .blink,
+  .shimmer::after {
+    animation: none !important;
+  }
+}
