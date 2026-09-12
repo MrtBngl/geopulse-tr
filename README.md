@@ -19,11 +19,8 @@
 
 ## 📸 Screenshots
 
-> [!NOTE]
-> To display your screenshots here, save your image files inside the [`public/`](./public) folder (e.g. `public/dashboard-preview.png`) and update the relative paths below.
-
-| Main Dashboard & Map View | AI Risk & Safety Report Sheet |
-| :---: | :---: |
+| Main Dashboard & Map View |
+| :---: |
 | ![Dashboard Preview](./public/main.png) |
 
 ---
@@ -140,18 +137,6 @@ GeoPulse-TR provides internal serverless API endpoints:
 
 ---
 
-## 🖼️ How to Add Screenshots
-
-1. Save your captured images or screenshots in the `public/` directory:
-   - Example: `public/dashboard-preview.png`
-   - Example: `public/ai-report-preview.png`
-2. Reference them anywhere in your markdown file:
-   ```markdown
-   ![Dashboard Preview](./public/dashboard-preview.png)
-   ```
-3. When pushed to GitHub, relative paths pointing to `./public/...` render seamlessly on your repo page!
-
----
 
 ## 🤝 Contributing
 
