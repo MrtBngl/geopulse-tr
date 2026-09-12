@@ -1,9 +1,5 @@
 # 🌋 GeoPulse-TR
 
-<p align="center">
-  <img src="./public/logo.png" alt="GeoPulse TR Logo" width="120" height="120" onerror="this.style.display='none'"/>
-</p>
-
 <h3 align="center">Next-Generation Real-Time Earthquake Intelligence & AI Risk Assessment for Turkey</h3>
 
 <p align="center">
@@ -28,7 +24,7 @@
 
 | Main Dashboard & Map View | AI Risk & Safety Report Sheet |
 | :---: | :---: |
-| ![Dashboard Preview](./public/dashboard-preview.png) | ![AI Report Preview](./public/ai-report-preview.png) |
+| ![Dashboard Preview](./public/main.png) |
 
 ---
 
